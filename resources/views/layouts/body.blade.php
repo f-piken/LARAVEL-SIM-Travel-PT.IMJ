@@ -1,0 +1,1 @@
+<body class="text-base bg-body-bg text-body font-public group-data-[skin=bordered]:bg-body-bordered group-data-[skin=bordered]:dark:bg-zink-700">
