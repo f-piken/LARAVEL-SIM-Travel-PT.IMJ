@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +22,11 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::resource('vehicles',VehicleController::class);
     Route::delete('/vehicles', [VehicleController::class, 'destroy'])->name('vehicles.bulkDelete');
     
+    Route::resource('bookings',BookingController::class);
+    Route::delete('/bookings', [BookingController::class, 'destroy'])->name('bookings.bulkDelete');
+    Route::post('/booking/{id}/deposit', [BookingController::class, 'updateDeposit'])->name('booking.deposit');
+    Route::get('bookings/{id}/download', [BookingController::class, 'downloadPdf'])->name('booking.downloadPdf');
+
     //taro di sini klo punya admin
 });
 
