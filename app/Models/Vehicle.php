@@ -19,4 +19,8 @@ class Vehicle extends Model
     {
         return $this->hasOne(VehicleDetail::class, 'vehicle_id');
     }
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
 }

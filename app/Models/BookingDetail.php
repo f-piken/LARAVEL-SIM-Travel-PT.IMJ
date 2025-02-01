@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class BookingDetail extends Model
 {
     protected $fillable = [
-        'vehicle_id', 'boking_id', 'deskripsi_sebelum', 'deskripsi_sesudah'
+        'vehicle_id', 'booking_id', 'deskripsi_sebelum', 'deskripsi_sesudah'
     ];
     public function booking()
     {

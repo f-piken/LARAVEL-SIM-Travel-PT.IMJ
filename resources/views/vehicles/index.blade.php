@@ -136,5 +136,35 @@
     <script src="{{ URL::asset('build/js/pages/listjs.init.js') }}"></script>
     <script src="{{ URL::asset('build/js/app.js') }}"></script>
     <script src="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script>
+        document.querySelector('[data-modal-close="showModal"]').addEventListener('click', () => {
+            document.getElementById('showModal').classList.add('hidden');
+            document.getElementById('showModal').classList.remove('show');
+        });
+    </script>
+    <script>
+        // Function to check or uncheck all checkboxes in a category
+        function toggleCheckboxes(className, checkboxId) {
+            const checkAll = document.getElementById(checkboxId);
+            const checkboxes = document.querySelectorAll(className);
+            
+            checkAll.addEventListener('change', () => {
+                checkboxes.forEach(checkbox => checkbox.checked = checkAll.checked);
+            });
+            
+            // Monitor individual checkbox changes and update "Check All" status
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    const allChecked = [...checkboxes].every(checkbox => checkbox.checked);
+                    checkAll.checked = allChecked;
+                });
+            });
+        }
+    
+        // Toggle checkboxes for each category
+        toggleCheckboxes('.checkSurat', 'checkAllSurat');
+        toggleCheckboxes('.checkPeralatan', 'checkAllPeralatan');
+        toggleCheckboxes('.checkKelistrikan', 'checkAllKelistrikan');
+    </script>
     @include('layouts.script-delete')
 @endpush

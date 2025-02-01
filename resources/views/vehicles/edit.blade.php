@@ -95,7 +95,9 @@
                     <a href="{{ route('vehicles.index') }}" data-modal-close="editVehicleModal"
                        class="text-white btn bg-slate-500 border-slate-500 hover:bg-slate-600">Cancel</a>
                     <button type="submit"
-                            class="text-white btn bg-custom-500 border-custom-500 hover:bg-custom-600">Save Changes</button>
+                            class="text-white btn bg-custom-500 border-custom-500 hover:bg-custom-600">
+                            <i data-lucide="save" class="inline-block size-4 ltr:mr-1 rtl:ml-1"></i>
+                            <span class="align-middle">Save Change</span></button>
                 </div>
             </form>            
         </div>

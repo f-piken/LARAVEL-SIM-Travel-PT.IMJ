@@ -58,7 +58,7 @@
                                     class="size-4 border rounded-sm cursor-pointer bg-slate-100 border-slate-200">
                             </th>
                             <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 ltr:text-left rtl:text-right">Customer Name</th>
-                            <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 ltr:text-left rtl:text-right">Vehicle</th>
+                            <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 ltr:text-left rtl:text-right">Vehicle / Nopol</th>
                             <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 ltr:text-left rtl:text-right">Start Date</th>
                             <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 ltr:text-left rtl:text-right">Charge</th>
                             <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 ltr:text-left rtl:text-right">Action</th>
@@ -73,7 +73,7 @@
                                     type="checkbox" name="ids[]" value="{{ $item->id }}">
                             </th>
                             <td class="px-3.5 py-2.5 border-y border-slate-200">{{ $item->customer->name }}</td>
-                            <td class="px-3.5 py-2.5 border-y border-slate-200">{{ $item->vehicle->name }}</td>
+                            <td class="px-3.5 py-2.5 border-y border-slate-200">{{ $item->vehicle->name }} / {{ $item->vehicle->license_plate }}</td>
                             <td class="px-3.5 py-2.5 border-y border-slate-200">{{ $item->start_date }}</td>
                             <td class="px-3.5 py-2.5 border-y border-slate-200">{{ $item->charge }}</td>
                             <td class="px-3.5 py-2.5 border-y border-slate-200">

@@ -26,6 +26,8 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::delete('/bookings', [BookingController::class, 'destroy'])->name('bookings.bulkDelete');
     Route::post('/booking/{id}/deposit', [BookingController::class, 'updateDeposit'])->name('booking.deposit');
     Route::get('bookings/{id}/download', [BookingController::class, 'downloadPdf'])->name('booking.downloadPdf');
+    Route::get('/get-available-vehicles', [BookingController::class, 'getAvailableVehicles']);
+    Route::get('/get-vehicle-status', [BookingController::class, 'getVehicleStatus']);
 
     //taro di sini klo punya admin
 });

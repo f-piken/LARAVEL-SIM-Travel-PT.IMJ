@@ -122,5 +122,11 @@
     <script src="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ URL::asset('build/js/pages/listjs.init.js') }}"></script>
     <script src="{{ URL::asset('build/js/app.js') }}"></script>
+    <script>
+        document.querySelector('[data-modal-close="showModal"]').addEventListener('click', () => {
+            document.getElementById('showModal').classList.add('hidden');
+            document.getElementById('showModal').classList.remove('show');
+        });
+    </script>
     @include('layouts.script-delete')
 @endpush
