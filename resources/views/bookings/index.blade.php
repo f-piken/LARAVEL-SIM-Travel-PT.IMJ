@@ -75,7 +75,7 @@
                             <td class="px-3.5 py-2.5 border-y border-slate-200">{{ $item->customer->name }}</td>
                             <td class="px-3.5 py-2.5 border-y border-slate-200">{{ $item->vehicle->name }} / {{ $item->vehicle->license_plate }}</td>
                             <td class="px-3.5 py-2.5 border-y border-slate-200">{{ $item->start_date }}</td>
-                            <td class="px-3.5 py-2.5 border-y border-slate-200">{{ $item->charge }}</td>
+                            <td class="px-3.5 py-2.5 border-y border-slate-200">Rp. {{ $item->charge }}</td>
                             <td class="px-3.5 py-2.5 border-y border-slate-200">
                                 <form action="{{ route('bookings.destroy', $item->id) }}" method="POST" class="delete-form">
                                     @csrf
