@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,9 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::get('/get-available-vehicles', [BookingController::class, 'getAvailableVehicles']);
     Route::get('/get-vehicle-status', [BookingController::class, 'getVehicleStatus']);
 
+    Route::resource('services',ServiceController::class);
+    Route::delete('/services', [ServiceController::class, 'destroy'])->name('services.bulkDelete');
+    Route::get('/services-report', [ServiceController::class, 'generateReport'])->name('service.report');
     //taro di sini klo punya admin
 });
 

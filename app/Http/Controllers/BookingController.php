@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\BookingDetail;
 use App\Models\Customer;
+use App\Models\Service;
+use App\Models\ServiceDetail;
 use App\Models\Vehicle;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -213,7 +215,6 @@ class BookingController extends Controller
 
     public function updateDeposit(Request $request, $id)
     {
-        // Validasi input
         $request->validate([
             'deposit' => 'required|numeric|min:0'
         ], [
@@ -222,15 +223,30 @@ class BookingController extends Controller
             'deposit.min' => 'Deposit tidak boleh kurang dari 0!'
         ]);
 
-        // Cari booking berdasarkan ID
         $booking = Booking::findOrFail($id);
 
         $balance = $booking->charge - $request->deposit;
-        // Update deposit
+
         $booking->status = 'deposit';
         $booking->balance = $balance;
         $booking->deposit = $request->deposit;
         $booking->save();
+
+        $service = Service::create([
+            'vehicle_id' => $booking->vehicle_id,
+            'total' => $booking->deposit,
+        ]);
+
+        $tanggalService = $booking->updated_at->format('Y-m-d');
+
+        ServiceDetail::create([
+            'service_id' => $service->id,
+            'boking_id' => $booking->id,
+            'tanggal_service' => $tanggalService,
+            'jumlah' => $request->deposit,
+            'debet' => $booking->deposit,
+            'kredit' => 0,
+        ]);
 
         // Redirect kembali dengan pesan sukses
         return redirect()->back()->with('success', 'Deposit berhasil diperbarui!');
