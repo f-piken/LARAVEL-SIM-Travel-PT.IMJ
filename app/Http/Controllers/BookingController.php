@@ -241,7 +241,7 @@ class BookingController extends Controller
 
         ServiceDetail::create([
             'service_id' => $service->id,
-            'boking_id' => $booking->id,
+            'booking_id' => $booking->id,
             'tanggal_service' => $tanggalService,
             'jumlah' => $request->deposit,
             'debet' => $booking->deposit,

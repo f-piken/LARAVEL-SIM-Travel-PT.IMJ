@@ -8,8 +8,8 @@ class ServiceDetail extends Model
 {
     protected $fillable = [
         'service_id', 
-        'boking_id', 
-        'tanggal_service', 
+        'booking_id', 
+        'tanggal_service',
         'keterangan', 
         'jumlah', 
         'debet', 

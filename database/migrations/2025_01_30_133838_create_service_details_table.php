@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('service_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('service_id');
-            $table->unsignedBigInteger('boking_id')->nullable();
+            $table->unsignedBigInteger('booking_id')->nullable();
             $table->date('tanggal_service');
             $table->text('keterangan')->nullable();
             $table->decimal('jumlah', 15, 2);
@@ -24,7 +24,7 @@ return new class extends Migration
 
             // Foreign key constraint
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
-            $table->foreign('boking_id')->references('id')->on('bokings')->onDelete('set null');
+            $table->foreign('booking_id')->references('id')->on('bookings')->onDelete('set null');
         });
     }
 

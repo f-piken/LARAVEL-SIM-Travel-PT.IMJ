@@ -3,19 +3,20 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\VehicleController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', function () {
     return view('komponen.product-landing');
 });
 
 Route::middleware(['auth','role:admin'])->group(function () {
-    Route::get('/admin-dashboard', function () {
-        return view('komponen.index');
-    });
+    Route::get('/admin-dashboard', [DashboardController::class, 'index']);
+    Route::get('/order-statistics', [DashboardController::class, 'getOrderStatistics']);
+    Route::get('/get-sales-profit', [DashboardController::class, 'getSalesProfit']);
 
     Route::resource('customers',CustomerController::class);
     Route::delete('/customers', [CustomerController::class, 'destroy'])->name('customers.bulkDelete');
@@ -33,6 +34,9 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::resource('services',ServiceController::class);
     Route::delete('/services', [ServiceController::class, 'destroy'])->name('services.bulkDelete');
     Route::get('/services-report', [ServiceController::class, 'generateReport'])->name('service.report');
+
+    Route::get('/profile', [AuthController::class, 'show'])->name('profile');
+    Route::post('/profile/update-photo', [AuthController::class, 'updateProfilePhoto'])->name('profile.update-photo');
     //taro di sini klo punya admin
 });
 
@@ -65,4 +69,6 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/change-password', [AuthController::class, 'changePassword'])->name('change.password');
+    Route::put('/update-profile', [AuthController::class, 'update'])->name('profile.update');
 });
