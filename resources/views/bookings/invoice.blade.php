@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rental Contract & Invoice</title>
     <style>
-        body { font-family: Arial, sans-serif; font-size: 12px; }
-        .container { width: 90%; margin: auto; padding: 20px; }
+        body { font-family: Arial, sans-serif; font-size: 10px; }
+        .container { width: 95%; margin: auto; padding: 20px; }
         h2, h3 { text-align: center; margin: 5px 0; }
         p { text-align: center; margin: 5px 0; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; }
         td { border: 1px solid black; padding: 5px; }
         .form {border: none; border-top: 1px solid black; border-bottom: 1px solid black; padding: 10px; }
         .detail { display: flex; gap: 10px; }
@@ -31,7 +31,7 @@
         <table>
             <tr>
                 <td style="border: none;">
-                    <img src="{{ $logoBase64 }}" alt="Company Logo" style="width: 100px; height: auto;">
+                    <img src="{{ $logoBase64 }}" alt="Company Logo" style="width: 120px; height: auto;">
                 </td>
                 <td style="border: none;">
                     <h2>IKHWANIN MULYO JOYO</h2>
@@ -127,7 +127,7 @@
                         @foreach ($categories as $category => $items)
                         <td style="border: none;">
                             @foreach ($items as $key => $value)
-                                <label><input type="checkbox"><input type="checkbox" {{ $value ? 'checked' : '' }}>{{ str_replace('_', ' ', $key) }}</label><br>
+                                <label><input type="checkbox"><input type="checkbox" {{ $value ? 'checked' : '' }}> {{ str_replace('_', ' ', $key) }}</label><br>
                             @endforeach
                         </td>
                         @endforeach
@@ -154,14 +154,7 @@
             <li>Wajib menyerahkan fotokopi identitas KTP.</li>
             <li>Dalam menggunakan mobil selama waktu sewa, penyewa wajib menjaga kehati-hatian dan mematuhi peraturan lalu lintas.</li>
             <li>
-                Dalam penggunaan mobil selama waktu sewa, penyewa dilarang untuk:
-                <ul>
-                    <li>Menyewakan mobil kembali kepada pihak lain.</li>
-                    <li>Merindah tangan kendaraan sewa.</li>
-                    <li>Menggunakan mobil untuk tindak kejahatan.</li>
-                    <li>Menyuruh orang lain yang tidak memiliki SIM untuk mengemudikan mobil.</li>
-                    <li>Menggunakan mobil di bawah pengaruh alkohol atau narkoba.</li>
-                </ul>
+                Dalam penggunaan mobil selama waktu sewa, penyewa dilarang untuk Menyewakan mobil kembali kepada pihak lain, Merindah tangan kendaraan sewa, Menggunakan mobil untuk tindak kejahatan, Menyuruh orang lain yang tidak memiliki SIM untuk mengemudikan mobil, Menggunakan mobil di bawah pengaruh alkohol atau narkoba.
             </li>
             <li>
                 Maksimal pengembalian mobil pukul 00.00 WIB (12 Malam). Jika melebihi waktu tersebut, dikenakan charge Rp 50.000 per jam. 

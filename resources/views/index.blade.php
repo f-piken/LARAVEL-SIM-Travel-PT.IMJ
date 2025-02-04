@@ -172,7 +172,7 @@
                             class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-500/20 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-500/20">Make a Vehicle Booking</a>
                     </div>
                     <div class="hidden col-span-12 2xl:col-span-3 lg:col-span-2 lg:col-start-11 2xl:col-start-10 lg:block">
-                        <img src="{{ URL::asset('build/images/dashboard.png') }}" alt=""
+                        <img src="{{ URL::asset('   images/logo.png') }}" alt=""
                             class="h-40 ltr:2xl:ml-auto rtl:2xl:mr-auto">
                     </div>
                 </div>
@@ -274,7 +274,7 @@
             </div>
         </div><!--end col-->
 
-        <div class="col-span-12 2xl:col-span-4">
+        {{-- <div class="col-span-12 2xl:col-span-4">
             <div class="grid grid-cols-12 gap-x-5">
                 <div class="col-span-12 card lg:col-span-6 2xl:col-span-3">
                     <div class="card-body">
@@ -349,7 +349,7 @@
                     </div>
                 </div><!--end col-->
             </div><!--end grid-->
-        </div><!--end col-->
+        </div><!--end col--> --}}
         <div class="col-span-12 card 2xl:col-span-12">
             <div class="card-body">
                 <div class="grid items-center grid-cols-1 gap-3 mb-5 2xl:grid-cols-12">

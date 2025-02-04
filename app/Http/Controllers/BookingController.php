@@ -282,13 +282,13 @@ class BookingController extends Controller
     {
         $booking = Booking::with(['customer', 'details', 'vehicle', 'employe'])->findOrFail($id);
 
-        $path = public_path('images/adminUser.jpg');
+        $path = public_path('images/logo.png');
         $imageData = base64_encode(file_get_contents($path));
         $imageType = pathinfo($path, PATHINFO_EXTENSION);
         $logoBase64 = "data:image/$imageType;base64,$imageData";
 
         $pdf = Pdf::loadView('bookings.invoice', compact('booking', 'logoBase64'))
-                 ->setPaper('A4', 'portrait'); // Set ukuran kertas
+                 ->setPaper('F4', 'portrait');
 
         return $pdf->download('booking_' . $booking->customer->name . '.pdf');
     }
