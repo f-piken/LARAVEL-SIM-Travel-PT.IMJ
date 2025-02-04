@@ -5,8 +5,10 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -45,6 +47,12 @@ Route::middleware(['auth','role:admin'])->group(function () {
 
     Route::get('/profile', [AuthController::class, 'show'])->name('profile');
     Route::post('/profile/update-photo', [AuthController::class, 'updateProfilePhoto'])->name('profile.update-photo');
+    
+    Route::resource('roles',RoleController::class);
+    Route::delete('/roles', [RoleController::class, 'destroy'])->name('roles.bulkDelete');
+    
+    Route::resource('users',UserController::class);
+    Route::delete('/users', [UserController::class, 'destroy'])->name('users.bulkDelete');
     //taro di sini klo punya admin
 });
 
