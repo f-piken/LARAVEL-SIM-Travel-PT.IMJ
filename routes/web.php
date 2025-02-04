@@ -4,6 +4,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DriverController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
@@ -21,8 +23,14 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::resource('customers',CustomerController::class);
     Route::delete('/customers', [CustomerController::class, 'destroy'])->name('customers.bulkDelete');
     
+    Route::resource('drivers',DriverController::class);
+    Route::delete('/drivers', [DriverController::class, 'destroy'])->name('drivers.bulkDelete');
+
     Route::resource('vehicles',VehicleController::class);
     Route::delete('/vehicles', [VehicleController::class, 'destroy'])->name('vehicles.bulkDelete');
+    
+    Route::resource('schedules',ScheduleController::class);
+    Route::delete('/schedules', [ScheduleController::class, 'destroy'])->name('schedules.bulkDelete');
     
     Route::resource('bookings',BookingController::class);
     Route::delete('/bookings', [BookingController::class, 'destroy'])->name('bookings.bulkDelete');
@@ -40,7 +48,7 @@ Route::middleware(['auth','role:admin'])->group(function () {
     //taro di sini klo punya admin
 });
 
-Route::middleware(['auth','role:karyawan'])->group(function () {
+Route::middleware(['auth','role:pegawai'])->group(function () {
     Route::get('/karyawan-dashboard', function () {
         return view('komponen.index');
     });
