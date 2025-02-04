@@ -65,6 +65,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr><th><form></form></th></tr>
                         @forelse($bookings as $item)
                         <tr>
                             <th class="px-3.5 py-2.5 border-y border-slate-200" scope="row">

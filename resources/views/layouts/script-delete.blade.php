@@ -19,8 +19,8 @@
             if (selectedCheckboxes.length === 0) {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'No Customers Selected',
-                    text: 'Please select at least one customer to delete.',
+                    title: 'No Data Selected',
+                    text: 'Please select at least one data to delete.',
                 });
                 return;
             }

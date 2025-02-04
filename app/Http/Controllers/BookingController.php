@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\BookingDetail;
 use App\Models\Customer;
+use App\Models\Schedule;
 use App\Models\Service;
 use App\Models\ServiceDetail;
 use App\Models\Vehicle;
@@ -88,6 +89,9 @@ class BookingController extends Controller
             'booking_id' => $booking->id,
             'deskripsi_sebelum' => $request->deskripsi_sebelum,
             'deskripsi_sesudah' => $request->deskripsi_sesudah,
+        ]);
+        Schedule::create([
+            'booking_id' => $booking->id,
         ]);
 
         return redirect()->route('bookings.index')->with('success', 'Booking berhasil dibuat.');

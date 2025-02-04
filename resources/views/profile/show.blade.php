@@ -62,7 +62,7 @@
                     <h6 class="mb-1 text-15">Personal Information</h6>
                     <p class="mb-4 text-slate-500">Update your personal details here easily.
                     </p>
-                    <form action="{{ route('profile.update') }}" method="POST">
+                    <form action="{{ route('profile.update') }}" method="POST" class="edit-form">
                         @csrf
                         @method('PUT')
                     
@@ -91,11 +91,11 @@
                             <!-- Submit Button -->
                             <div class="xl:col-span-12 flex justify-end mt-6 gap-x-4">
                                 <button type="submit"
-                                    class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100">
+                                    class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 btn-edit">
                                     Update</button>
-                                <button type="reset"
+                                {{-- <button type="reset"
                                     class="text-red-500 bg-red-100 btn hover:text-white hover:bg-red-600 focus:text-white focus:bg-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:ring active:ring-red-100">
-                                    Cancel</button>
+                                    Cancel</button> --}}
                             </div><!--end col-->
                         </div><!--end grid-->
                     </form>                    
@@ -107,7 +107,7 @@
             <div class="card">
                 <div class="card-body">
                     <h6 class="mb-4 text-15">Changes Password</h6>
-                    <form action="{{ route('change.password') }}" method="POST">
+                    <form action="{{ route('change.password') }}" method="POST" class="pw-form">
                         @csrf
                         
                         <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
@@ -119,8 +119,11 @@
                                         class="form-input border-slate-200 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 disabled:border-slate-300 disabled:text-slate-500 placeholder:text-slate-400"
                                         id="oldpasswordInput" placeholder="Enter current password" required>
                                     <button class="absolute top-2 ltr:right-4 rtl:left-4 toggle-password" type="button"><i
-                                            class="align-middle ri-eye-fill text-slate-500"></i></button>
+                                            class="align-middle ri-eye-fill text-slate-500"></i></button>   
                                 </div>
+                                @error('old_password')
+                                    <div class="error">{{ $message }}</div>
+                                @enderror
                             </div><!--end col-->
                             
                             <!-- New Password -->
@@ -133,6 +136,9 @@
                                     <button class="absolute top-2 ltr:right-4 rtl:left-4 toggle-password" type="button"><i
                                             class="align-middle ri-eye-fill text-slate-500"></i></button>
                                 </div>
+                                @error('new_password')
+                                    <div class="error">{{ $message }}</div>
+                                @enderror
                             </div><!--end col-->
                     
                             <!-- Confirm New Password -->
@@ -146,17 +152,20 @@
                                     <button class="absolute top-2 ltr:right-4 rtl:left-4 toggle-password" type="button"><i
                                             class="align-middle ri-eye-fill text-slate-500"></i></button>
                                 </div>
+                                @error('new_password_confirmation')
+                                    <div class="error">{{ $message }}</div>
+                                @enderror
                             </div><!--end col-->
                     
                             <!-- Submit Button -->
                             <div class="flex justify-end xl:col-span-6">
                                 <button type="submit"
-                                    class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100">
+                                    class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 btn-pw">
                                     Change Password
                                 </button>
                             </div>
                         </div><!--end grid-->
-                    </form>                    
+                    </form>
                 </div>
             </div>
         </div>
@@ -166,6 +175,8 @@
     <script src="{{ URL::asset('build/js/pages/pages-account-setting.init.js') }}"></script>
     <!-- App js -->
     <script src="{{ URL::asset('build/js/app.js') }}"></script>
+    <script src="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+
     <script>
         function submitForm() {
             // Men-submit formulir secara otomatis ketika file dipilih
@@ -177,6 +188,57 @@
                 const passwordInput = this.previousElementSibling;
                 const type = passwordInput.type === 'password' ? 'text' : 'password';
                 passwordInput.type = type;
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Tangkap semua tombol dengan class btn-delete
+            const deleteButtons = document.querySelectorAll('.btn-pw');
+            deleteButtons.forEach((button) => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                
+                    const deleteForm = this.closest('.pw-form');
+                
+                    Swal.fire({
+                        title: 'Are you sure you want to change your password?',
+                        text: "After the password has been changed, log in again!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, change it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            deleteForm.submit();
+                        }
+                    });
+                });
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            // Tangkap semua tombol dengan class btn-delete
+            const deleteButtons = document.querySelectorAll('.btn-edit');
+            deleteButtons.forEach((button) => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                
+                    const deleteForm = this.closest('.edit-form');
+                
+                    Swal.fire({
+                        title: 'Are you sure you want to change?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, change it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            deleteForm.submit();
+                        }
+                    });
+                });
             });
         });
     </script>

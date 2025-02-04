@@ -78,21 +78,16 @@ class AuthController extends Controller
             'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
     
-        // Ambil data pengguna yang sedang login
         $user = Auth::user();
-        $employe = $user->employe; // Asumsi sudah ada relasi dengan tabel employes
+        $employe = $user->employe;
     
-        // Cek apakah file gambar ada
         if ($request->hasFile('profile_photo')) {
-            // Hapus foto lama jika ada
-            if ($employe->profile_photo_path) {
-                Storage::delete($employe->profile_photo_path);
+            if (!empty($employe->profile_photo_path) && Storage::disk('public')->exists($employe->profile_photo_path)) {
+                Storage::disk('public')->delete( $employe->profile_photo_path);
             }
         
-            // Simpan foto baru dan dapatkan path-nya
             $path = $request->file('profile_photo')->store('profile_photos', 'public');
         
-            // Update kolom profile_photo_path di tabel employes
             $employe->profile_photo_path = $path;
             $employe->save();
         }
@@ -102,34 +97,32 @@ class AuthController extends Controller
 
     public function changePassword(Request $request)
     {
-        // Validasi input
-        $validator = Validator::make($request->all(), [
-            'old_password' => 'required|string',
-            'new_password' => 'required|string|min:8|confirmed',
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
         ], [
-            'old_password.required' => 'Password saat ini wajib diisi.',
+            'old_password.required' => 'Password lama wajib diisi.',
             'new_password.required' => 'Password baru wajib diisi.',
-            'new_password.min' => 'Password baru harus minimal 8 karakter.',
-            'new_password.confirmed' => 'Konfirmasi password baru tidak cocok.',
+            'new_password.min' => 'Password baru minimal 8 karakter.',
+            'new_password.confirmed' => 'Konfirmasi password tidak sesuai.',
         ]);
-
-        // Jika validasi gagal
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
-        // Cek apakah password lama yang dimasukkan benar
-        if (!Hash::check($request->old_password, Auth::user()->password)) {
-            return back()->withErrors(['old_password' => 'Password lama tidak sesuai.']);
-        }
-
-        // Update password dengan password baru
+    
         $user = Auth::user();
-        $user->password = Hash::make($request->new_password);  // Enkripsi password baru
+    
+        // Periksa apakah password lama cocok
+        if (!Hash::check($request->old_password, $user->password)) {
+            return redirect()->route('profile.show')->withErrors(['old_password' => 'Password lama tidak sesuai.']);
+        }
+    
+        // Update password baru
+        $user->password = Hash::make($request->new_password);
         $user->save();
-
-        // Beri feedback sukses
-        return redirect()->back()->with('success', 'Password berhasil diubah!');
+    
+        // Logout pengguna untuk memastikan mereka harus login ulang
+        Auth::logout();
+    
+        // Redirect ke halaman login dengan pesan sukses
+        return redirect()->route('login')->with('success', 'Password berhasil diperbarui. Silakan login kembali.');
     }
     
     public function logout()
